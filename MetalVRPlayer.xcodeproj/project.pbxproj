@@ -1,0 +1,360 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E73C5BA91E31BCF1007EF87F /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73C5BA81E31BCF1007EF87F /* PlayerViewController.swift */; };
+		E73C5BAD1E31E4FD007EF87F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73C5BAC1E31E4FD007EF87F /* CoreVideo.framework */; };
+		E73C5BAF1E31E513007EF87F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73C5BAE1E31E513007EF87F /* CoreAudio.framework */; };
+		E73C5BB11E31E52D007EF87F /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73C5BB01E31E52D007EF87F /* CoreAudioKit.framework */; };
+		E73C5BB31E31E537007EF87F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73C5BB21E31E537007EF87F /* CoreGraphics.framework */; };
+		E73C5BB51E31E547007EF87F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73C5BB41E31E547007EF87F /* CoreMotion.framework */; };
+		E76350B61E30C9400057F2D6 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76350B51E30C9400057F2D6 /* SceneKit.framework */; };
+		E783F1AF1E3086C400B8D75B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E783F1AE1E3086C400B8D75B /* AppDelegate.swift */; };
+		E783F1B11E3086C400B8D75B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E783F1B01E3086C400B8D75B /* ViewController.swift */; };
+		E783F1B41E3086C400B8D75B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E783F1B21E3086C400B8D75B /* Main.storyboard */; };
+		E783F1B61E3086C400B8D75B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E783F1B51E3086C400B8D75B /* Assets.xcassets */; };
+		E783F1B91E3086C400B8D75B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E783F1B71E3086C400B8D75B /* LaunchScreen.storyboard */; };
+		E783F1CB1E30BA2000B8D75B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E783F1CA1E30BA2000B8D75B /* AVFoundation.framework */; };
+		E783F1CD1E30BA4B00B8D75B /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E783F1CC1E30BA4B00B8D75B /* VideoPlayer.swift */; };
+		E783F1CF1E30BC0D00B8D75B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E783F1CE1E30BC0D00B8D75B /* VideoToolbox.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E73C5BA81E31BCF1007EF87F /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		E73C5BAC1E31E4FD007EF87F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		E73C5BAE1E31E513007EF87F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		E73C5BB01E31E52D007EF87F /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		E73C5BB21E31E537007EF87F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E73C5BB41E31E547007EF87F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		E76350B51E30C9400057F2D6 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		E783F1AB1E3086C400B8D75B /* MetalVRPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalVRPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E783F1AE1E3086C400B8D75B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E783F1B01E3086C400B8D75B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E783F1B31E3086C400B8D75B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E783F1B51E3086C400B8D75B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E783F1B81E3086C400B8D75B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E783F1BA1E3086C400B8D75B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E783F1C51E30884600B8D75B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E783F1CA1E30BA2000B8D75B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E783F1CC1E30BA4B00B8D75B /* VideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
+		E783F1CE1E30BC0D00B8D75B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E783F1A81E3086C400B8D75B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E73C5BB51E31E547007EF87F /* CoreMotion.framework in Frameworks */,
+				E73C5BB31E31E537007EF87F /* CoreGraphics.framework in Frameworks */,
+				E73C5BB11E31E52D007EF87F /* CoreAudioKit.framework in Frameworks */,
+				E73C5BAF1E31E513007EF87F /* CoreAudio.framework in Frameworks */,
+				E73C5BAD1E31E4FD007EF87F /* CoreVideo.framework in Frameworks */,
+				E76350B61E30C9400057F2D6 /* SceneKit.framework in Frameworks */,
+				E783F1CF1E30BC0D00B8D75B /* VideoToolbox.framework in Frameworks */,
+				E783F1CB1E30BA2000B8D75B /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E783F1A21E3086C400B8D75B = {
+			isa = PBXGroup;
+			children = (
+				E783F1AD1E3086C400B8D75B /* MetalVRPlayer */,
+				E783F1AC1E3086C400B8D75B /* Products */,
+				E783F1C01E30883E00B8D75B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E783F1AC1E3086C400B8D75B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E783F1AB1E3086C400B8D75B /* MetalVRPlayer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E783F1AD1E3086C400B8D75B /* MetalVRPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E783F1AE1E3086C400B8D75B /* AppDelegate.swift */,
+				E783F1B01E3086C400B8D75B /* ViewController.swift */,
+				E783F1B21E3086C400B8D75B /* Main.storyboard */,
+				E783F1B51E3086C400B8D75B /* Assets.xcassets */,
+				E783F1B71E3086C400B8D75B /* LaunchScreen.storyboard */,
+				E783F1BA1E3086C400B8D75B /* Info.plist */,
+				E783F1CC1E30BA4B00B8D75B /* VideoPlayer.swift */,
+				E73C5BA81E31BCF1007EF87F /* PlayerViewController.swift */,
+			);
+			path = MetalVRPlayer;
+			sourceTree = "<group>";
+		};
+		E783F1C01E30883E00B8D75B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E73C5BB41E31E547007EF87F /* CoreMotion.framework */,
+				E73C5BB21E31E537007EF87F /* CoreGraphics.framework */,
+				E73C5BB01E31E52D007EF87F /* CoreAudioKit.framework */,
+				E73C5BAE1E31E513007EF87F /* CoreAudio.framework */,
+				E73C5BAC1E31E4FD007EF87F /* CoreVideo.framework */,
+				E76350B51E30C9400057F2D6 /* SceneKit.framework */,
+				E783F1CE1E30BC0D00B8D75B /* VideoToolbox.framework */,
+				E783F1CA1E30BA2000B8D75B /* AVFoundation.framework */,
+				E783F1C51E30884600B8D75B /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E783F1AA1E3086C400B8D75B /* MetalVRPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E783F1BD1E3086C400B8D75B /* Build configuration list for PBXNativeTarget "MetalVRPlayer" */;
+			buildPhases = (
+				E783F1A71E3086C400B8D75B /* Sources */,
+				E783F1A81E3086C400B8D75B /* Frameworks */,
+				E783F1A91E3086C400B8D75B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MetalVRPlayer;
+			productName = MetalVRPlayer;
+			productReference = E783F1AB1E3086C400B8D75B /* MetalVRPlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E783F1A31E3086C400B8D75B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "魏靖南";
+				TargetAttributes = {
+					E783F1AA1E3086C400B8D75B = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 96E5N4445H;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E783F1A61E3086C400B8D75B /* Build configuration list for PBXProject "MetalVRPlayer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E783F1A21E3086C400B8D75B;
+			productRefGroup = E783F1AC1E3086C400B8D75B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E783F1AA1E3086C400B8D75B /* MetalVRPlayer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E783F1A91E3086C400B8D75B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E783F1B91E3086C400B8D75B /* LaunchScreen.storyboard in Resources */,
+				E783F1B61E3086C400B8D75B /* Assets.xcassets in Resources */,
+				E783F1B41E3086C400B8D75B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E783F1A71E3086C400B8D75B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E783F1B11E3086C400B8D75B /* ViewController.swift in Sources */,
+				E73C5BA91E31BCF1007EF87F /* PlayerViewController.swift in Sources */,
+				E783F1AF1E3086C400B8D75B /* AppDelegate.swift in Sources */,
+				E783F1CD1E30BA4B00B8D75B /* VideoPlayer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E783F1B21E3086C400B8D75B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E783F1B31E3086C400B8D75B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E783F1B71E3086C400B8D75B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E783F1B81E3086C400B8D75B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E783F1BB1E3086C400B8D75B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E783F1BC1E3086C400B8D75B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E783F1BE1E3086C400B8D75B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 96E5N4445H;
+				INFOPLIST_FILE = MetalVRPlayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ngo.gcw.net.MetalVRPlayer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E783F1BF1E3086C400B8D75B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 96E5N4445H;
+				INFOPLIST_FILE = MetalVRPlayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ngo.gcw.net.MetalVRPlayer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E783F1A61E3086C400B8D75B /* Build configuration list for PBXProject "MetalVRPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E783F1BB1E3086C400B8D75B /* Debug */,
+				E783F1BC1E3086C400B8D75B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E783F1BD1E3086C400B8D75B /* Build configuration list for PBXNativeTarget "MetalVRPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E783F1BE1E3086C400B8D75B /* Debug */,
+				E783F1BF1E3086C400B8D75B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E783F1A31E3086C400B8D75B /* Project object */;
+}

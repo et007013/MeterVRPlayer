@@ -116,6 +116,10 @@ class VideoPlayer: NSObject {
         player     = AVPlayer(playerItem: playerItem)
         
         super.init()
+        
+        self.setupPlayer()
+        self.addPlayerObservers()
+        self.setupAudioSession()
     }
     
     
@@ -129,6 +133,23 @@ class VideoPlayer: NSObject {
 }
 
 extension VideoPlayer {
+    
+    func setUrl(urlAddr : String?) -> Void {
+        
+        if urlAddr == nil {
+            return
+        }
+        
+        self.videoAddr = URL(string: urlAddr!)
+        self.resetPlayerItemIfNecessary()
+        let avIterm = AVPlayerItem(url: self.videoAddr!)
+        
+        if avIterm == nil {
+            self.reportUnableToCreatePlayerItem()
+        }
+        
+    }
+    
     func play() -> Void {
         
         if self.player!.currentItem == nil {
@@ -193,12 +214,6 @@ extension VideoPlayer {
         
     }
     
-    func playerItemDidPlayToEndTime(nofication : Notification) {
-        //TODO: to write code
-        
-        
-    }
-    
     func resetPlayer() -> Void {
         self.player?.pause()
         self.resetPlayerItemIfNecessary()
@@ -221,6 +236,15 @@ extension VideoPlayer {
         }
         
         return loadedDuration
+        
+    }
+    
+    fileprivate func reportUnableToCreatePlayerItem() -> Void {
+        
+        if self.vpDelegate != nil && self.vpDelegate!.responds(to: Selector(("videoPlayerDidFailWithError:"))) {
+            let error = VideoPlayerError.kVideoPlayerErrorDomain(reson: "Unable to create AVPlayerItem.")
+            self.vpDelegate?.videoPlayerDidFailWithError(player: self, Error: error)
+        }
         
     }
     
@@ -255,6 +279,21 @@ extension VideoPlayer {
         self.playerIsPlaying    = false
         self.playerBufferLength = DefaultPlayableBufferLength
         self.volumeFadeDuration = DefaultVolumeFadeDuration
+    }
+    
+    @objc fileprivate func playerItemDidPlayToEndTime(nofication : Notification) {
+        //TODO: to write code
+        if (nofication.object as! UIAccessibilityCustomRotorItemResult) != self.player!.currentItem {
+            return
+        }
+        
+        self.isAtEndTime = true
+        self.playerIsPlaying = false
+        
+        if self.vpDelegate != nil && self.vpDelegate!.responds(to: Selector(("videoPlayerIsReadyDidReachEnd:"))) {
+            self.vpDelegate?.videoPlayerIsReadyDidReachEnd(player: self)
+        }
+        
     }
 }
 

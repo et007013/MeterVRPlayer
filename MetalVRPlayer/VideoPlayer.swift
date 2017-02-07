@@ -132,6 +132,7 @@ class VideoPlayer: NSObject {
     
 }
 
+//MARK: - Player Controll function
 extension VideoPlayer {
     
     func setUrl(urlAddr : String?) -> Void {
@@ -142,7 +143,7 @@ extension VideoPlayer {
         
         self.videoAddr = URL(string: urlAddr!)
         self.resetPlayerItemIfNecessary()
-        let avIterm = AVPlayerItem(url: self.videoAddr!)
+        let avIterm : AVPlayerItem? = AVPlayerItem(url: self.videoAddr!)
         
         if avIterm == nil {
             self.reportUnableToCreatePlayerItem()
@@ -239,6 +240,7 @@ extension VideoPlayer {
         
     }
     
+    //MARK:- Private function
     fileprivate func reportUnableToCreatePlayerItem() -> Void {
         
         if self.vpDelegate != nil && self.vpDelegate!.responds(to: Selector(("videoPlayerDidFailWithError:"))) {

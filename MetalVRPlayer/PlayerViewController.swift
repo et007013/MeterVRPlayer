@@ -8,6 +8,8 @@
 
 import UIKit
 import SceneKit
+import SpriteKit
+import CoreMotion
 
 class PlayerViewController: UIViewController {
     
@@ -16,11 +18,33 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var leftSceneWidth: NSLayoutConstraint!
     @IBOutlet weak var rightSceneWidth: NSLayoutConstraint!
     
+    var scenes : [SCNScene]!
+    var videoNodes : [SCNNode]!
+    var videoSpriteKitNodes : [SKVideoNode]!
+    var cameraNodes : [SCNNode]!
+    var cameraRollNodes : [SCNNode]!
+    var cameraPitchNodes : [SCNNode]!
+    var cameraYawNodes : [SCNNode]!
+    var motionManager : CMMotionManager?
+    var recognizer : UITapGestureRecognizer?
+    var panRecognizer : UIPanGestureRecognizer?
+    
+    var vrPlayer : VideoPlayer?
+    var currentAngleX : Float!
+    var currentAngleY : Float!
+    var oldY : Float!
+    var oldX : Float!
+    var progressObserver : AnyObject?
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.leftSceneView.delegate = self
+        self.rightSceneView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,4 +63,12 @@ class PlayerViewController: UIViewController {
     }
     */
 
+}
+
+extension PlayerViewController:UIGestureRecognizerDelegate {
+    
+}
+
+extension PlayerViewController:SCNSceneRendererDelegate {
+    
 }

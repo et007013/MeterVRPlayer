@@ -53,7 +53,6 @@ class VideoPlayer: NSObject {
     var playerBufferLength = 0.0
     var volumeFadeDuration = 0.0
     //是否立体
-    var isStereo : Bool    = false
     var isScrubbing        = false
     var seeking : Bool     = false
     /// 播放器代理

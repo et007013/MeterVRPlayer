@@ -36,34 +36,35 @@ class PlayerViewController: UIViewController {
     var oldX : Float!
     var progressObserver : AnyObject?
     var isStereo : Bool = false
+    var hiddenButtons = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.leftSceneView.delegate = self
+        self.leftSceneView.delegate  = self
         self.rightSceneView.delegate = self
-        let camx : Float = 0.0
-        let camY : Float = 0.0
-        let camZ : Float = 0.0
-        let zFar = 50.0
+        let camX : Float             = 0.0
+        let camY : Float             = 0.0
+        let camZ : Float             = 0.0
+        let zFar                     = 50.0
         
-        let leftCamera = SCNCamera()
-        let rightCamera = SCNCamera()
-        leftCamera.zFar = zFar
-        rightCamera.zFar = zFar
+        let leftCamera               = SCNCamera()
+        let rightCamera              = SCNCamera()
+        leftCamera.zFar              = zFar
+        rightCamera.zFar             = zFar
         
-        let leftCameraNode = SCNNode()
-        leftCameraNode.camera = leftCamera
-        let rightCameraNode = SCNNode()
-        rightCameraNode.camera = rightCamera
+        let leftCameraNode           = SCNNode()
+        leftCameraNode.camera        = leftCamera
+        let rightCameraNode          = SCNNode()
+        rightCameraNode.camera       = rightCamera
         
-        let scene1 = SCNScene()
+        let scene1                   = SCNScene()
         
-        let cameraNodeLeft = SCNNode()
-        let cameraRollNodeLeft = SCNNode()
-        let cameraPitchNodeLeft = SCNNode()
-        let cameraYawNodeLeft = SCNNode()
+        let cameraNodeLeft           = SCNNode()
+        let cameraRollNodeLeft       = SCNNode()
+        let cameraPitchNodeLeft      = SCNNode()
+        let cameraYawNodeLeft        = SCNNode()
         
         cameraNodeLeft.addChildNode(leftCameraNode)
         cameraNodeLeft.addChildNode(rightCameraNode)
@@ -74,23 +75,23 @@ class PlayerViewController: UIViewController {
         self.leftSceneView.scene = scene1
         
         if isStereo {
-            let scene2 = SCNScene()
-            let cameraNodeRight = SCNNode()
-            let cameraRollNodeRight = SCNNode()
+            let scene2               = SCNScene()
+            let cameraNodeRight      = SCNNode()
+            let cameraRollNodeRight  = SCNNode()
             let cameraPitchNodeRight = SCNNode()
-            let cameraYawNodeRight = SCNNode()
+            let cameraYawNodeRight   = SCNNode()
             
-            scenes = [scene1, scene2]
-            cameraNodes = [cameraNodeLeft, cameraNodeRight]
-            cameraRollNodes = [cameraRollNodeLeft, cameraRollNodeRight]
-            cameraPitchNodes = [cameraPitchNodeLeft, cameraPitchNodeRight]
-            cameraYawNodes = [cameraYawNodeLeft, cameraYawNodeRight]
+            scenes                   = [scene1, scene2]
+            cameraNodes              = [cameraNodeLeft, cameraNodeRight]
+            cameraRollNodes          = [cameraRollNodeLeft, cameraRollNodeRight]
+            cameraPitchNodes         = [cameraPitchNodeLeft, cameraPitchNodeRight]
+            cameraYawNodes           = [cameraYawNodeLeft, cameraYawNodeRight]
             
-            rightSceneView?.scene = scene2
-            leftCamera.xFov = 80
-            rightCamera.xFov = 80
-            leftCamera.yFov = 80
-            rightCamera.yFov = 80
+            rightSceneView?.scene    = scene2
+            leftCamera.xFov          = 80
+            rightCamera.xFov         = 80
+            leftCamera.yFov          = 80
+            rightCamera.yFov         = 80
             
             cameraNodeRight.addChildNode(rightCameraNode)
             cameraRollNodeRight.addChildNode(cameraNodeRight)
@@ -106,7 +107,43 @@ class PlayerViewController: UIViewController {
             rightSceneView?.scene = scene1
 
         }
+        
+        leftCameraNode.position  = SCNVector3(x : camX + ((true  == isStereo) ? 0.0  : 0.5), y :camY, z :camZ)
+        rightCameraNode.position = SCNVector3(x : camX + ((true == isStereo) ? 0.0  : 0.5), y : camY, z : camZ)
+        
+        let camerasNodeAngles    = getCamerasNodeAngle()
+        
+        for cameraNode in cameraNodes {
+            cameraNode.position    = SCNVector3(x : camX, y : camY, z : camZ)
+            cameraNode.eulerAngles = SCNVector3Make( Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]) )
+        }
 
+        if scenes.count == cameraYawNodes.count {
+            
+            for index in 0 ..< scenes.count {
+                let scene         = scenes[index]
+                let cameraYawNode = cameraYawNodes[index]
+                scene.rootNode.addChildNode(cameraYawNode)
+            }
+            
+        }
+        
+        leftSceneView.pointOfView = leftCameraNode
+        rightSceneView.pointOfView = rightCameraNode
+        
+        leftSceneView.isPlaying = true
+        rightSceneView.isPlaying = true
+        
+        motionManager = CMMotionManager()
+        motionManager?.deviceMotionUpdateInterval = 1.0 / 60.0
+        motionManager?.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xArbitraryZVertical)
+        
+        recognizer = UITapGestureRecognizer(target: self, action: #selector(PlayerViewController.tapTheScreen))
+        recognizer?.delegate = self
+        view.addGestureRecognizer(recognizer!)
+        
+        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PlayerViewController.panGesture(sender:)))
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,7 +151,42 @@ class PlayerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func getCamerasNodeAngle() -> [Double] {
+        
+        var camerasNodeAngle1 : Double! = 0.0
+        var camerasNodeAngle2 : Double! = 0.0
+        
+        let orientation                = UIApplication.shared.statusBarOrientation.rawValue
+        
+        if orientation == 1 {
+            camerasNodeAngle1          = -M_PI_2
+        } else if orientation == 2 {
+            camerasNodeAngle1          = M_PI_2
+        } else if orientation == 3 {
+            camerasNodeAngle1          = 0.0
+            camerasNodeAngle2          = M_PI
+        }
+        
+        return [ -M_PI_2, camerasNodeAngle1, camerasNodeAngle2]
+        
+    }
+    
+    @objc fileprivate func tapTheScreen() -> Void {
+        
+        if hiddenButtons {
+            
+        } else {
+            
+        }
+        
+        hiddenButtons = !hiddenButtons
+    }
+    
+    @objc fileprivate func panGesture(sender : UIPanGestureRecognizer) {
+        
+    }
 
+    
     /*
     // MARK: - Navigation
 
@@ -124,6 +196,10 @@ class PlayerViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    deinit {
+        
+    }
 
 }
 

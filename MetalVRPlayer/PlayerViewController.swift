@@ -170,7 +170,26 @@ class PlayerViewController: UIViewController {
         return [ -M_PI_2, camerasNodeAngle1, camerasNodeAngle2]
         
     }
+
     
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    // MARK: - 释放资源
+    deinit {
+        
+    }
+
+}
+
+// MARK: - Gesture
+extension PlayerViewController:UIGestureRecognizerDelegate {
     @objc fileprivate func tapTheScreen() -> Void {
         
         if hiddenButtons {
@@ -184,29 +203,34 @@ class PlayerViewController: UIViewController {
     
     @objc fileprivate func panGesture(sender : UIPanGestureRecognizer) {
         
-    }
-
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    deinit {
+        let translation = sender.translation(in: sender.view)
+        let protection : Float = 2.0
+        
+        if abs(Float(translation.x) - oldX) >= protection {
+            let newAngleX = Float(translation.x) - oldX - protection
+            currentAngleX = newAngleX / 100 + currentAngleX
+            oldX = Float(translation.x)
+        }
+        
+        if abs(Float(translation.y) - oldY) >= protection {
+            let newAngleY = Float(translation.y) - oldY - protection
+            currentAngleY = newAngleY / 100 + currentAngleY
+            oldY = Float(translation.y)
+        }
+        
+        if sender.state == .ended {
+            oldX = 0
+            oldY = 0
+        }
         
     }
-
 }
 
-extension PlayerViewController:UIGestureRecognizerDelegate {
-    
-}
-
+// MARK: - Render
 extension PlayerViewController:SCNSceneRendererDelegate {
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+    }
     
 }

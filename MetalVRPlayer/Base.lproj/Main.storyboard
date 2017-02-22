@@ -6,52 +6,9 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MetalVRPlayer" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Fyx-6n-iAF">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                            </imageView>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wVy-w1-iIk">
-                                <rect key="frame" x="213.5" y="-126" width="240" height="627"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="627" id="F73-Qd-aUe"/>
-                                    <constraint firstAttribute="width" constant="240" id="a0E-E9-Zeb"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Fyx-6n-iAF" secondAttribute="trailing" id="4Ce-7z-uYU"/>
-                            <constraint firstItem="Fyx-6n-iAF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="HmI-CV-zg9"/>
-                            <constraint firstItem="wVy-w1-iIk" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Pen-fc-Y1t"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Fyx-6n-iAF" secondAttribute="bottom" id="U5w-a1-rMr"/>
-                            <constraint firstItem="Fyx-6n-iAF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fHn-xS-yld"/>
-                            <constraint firstItem="wVy-w1-iIk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tvv-HU-vdB"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="gradientView" destination="wVy-w1-iIk" id="dQd-C4-jMF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="137.18140929535232"/>
-        </scene>
         <!--Player View Controller-->
         <scene sceneID="L2t-8A-bYT">
             <objects>
@@ -67,6 +24,10 @@
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2V5-AX-dkb">
                                 <rect key="frame" x="0.0" y="0.0" width="333.5" height="375"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="333.5" id="7q1-yA-3Rp"/>
+                                    <constraint firstAttribute="height" constant="375" id="tk9-Se-4V7"/>
+                                </constraints>
                             </sceneKitView>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EE1-oY-dGm">
                                 <rect key="frame" x="335" y="0.0" width="332" height="375"/>
@@ -75,21 +36,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2V5-AX-dkb" firstAttribute="top" secondItem="xOu-wF-lsK" secondAttribute="top" id="CNW-wa-bJJ"/>
-                            <constraint firstItem="2V5-AX-dkb" firstAttribute="width" secondItem="xOu-wF-lsK" secondAttribute="width" multiplier="1:2" id="F5S-01-Lvf"/>
-                            <constraint firstItem="wZP-GJ-BOD" firstAttribute="top" secondItem="EE1-oY-dGm" secondAttribute="bottom" id="GAd-ES-qHz"/>
-                            <constraint firstItem="2V5-AX-dkb" firstAttribute="leading" secondItem="xOu-wF-lsK" secondAttribute="leading" id="GDf-e7-gH1"/>
-                            <constraint firstItem="EE1-oY-dGm" firstAttribute="top" secondItem="xOu-wF-lsK" secondAttribute="top" id="K45-kc-trC"/>
-                            <constraint firstItem="wZP-GJ-BOD" firstAttribute="top" secondItem="2V5-AX-dkb" secondAttribute="bottom" id="ooc-BS-AB4"/>
-                            <constraint firstItem="EE1-oY-dGm" firstAttribute="width" secondItem="xOu-wF-lsK" secondAttribute="width" multiplier="1:2" constant="-1.5" id="sBL-Od-mSY"/>
-                            <constraint firstAttribute="trailing" secondItem="EE1-oY-dGm" secondAttribute="trailing" id="ugo-bv-GxR"/>
+                            <constraint firstItem="2V5-AX-dkb" firstAttribute="top" secondItem="xOu-wF-lsK" secondAttribute="top" id="2Wn-Zi-D5m"/>
+                            <constraint firstItem="EE1-oY-dGm" firstAttribute="leading" secondItem="2V5-AX-dkb" secondAttribute="trailing" constant="1.5" id="3PQ-9I-bry"/>
+                            <constraint firstAttribute="trailing" secondItem="EE1-oY-dGm" secondAttribute="trailing" id="BvK-YZ-Ww3"/>
+                            <constraint firstItem="wZP-GJ-BOD" firstAttribute="top" secondItem="EE1-oY-dGm" secondAttribute="bottom" id="Fq8-E6-00B"/>
+                            <constraint firstItem="2V5-AX-dkb" firstAttribute="leading" secondItem="xOu-wF-lsK" secondAttribute="leading" id="onO-ml-roT"/>
+                            <constraint firstItem="EE1-oY-dGm" firstAttribute="top" secondItem="xOu-wF-lsK" secondAttribute="top" id="s7c-jd-ftS"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="leftSceneHeight" destination="tk9-Se-4V7" id="hDG-ug-9Ie"/>
                         <outlet property="leftSceneView" destination="2V5-AX-dkb" id="U8k-u9-8Si"/>
-                        <outlet property="leftSceneWidth" destination="F5S-01-Lvf" id="2NB-JS-fBA"/>
+                        <outlet property="leftSceneWidth" destination="7q1-yA-3Rp" id="Aoe-cT-K76"/>
                         <outlet property="rightSceneView" destination="EE1-oY-dGm" id="NzJ-KZ-Je9"/>
-                        <outlet property="rightSceneWidth" destination="sBL-Od-mSY" id="hUu-em-PIU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ziB-dK-ixI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -97,7 +56,4 @@
             <point key="canvasLocation" x="136.28185907046478" y="796"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="20_bg" width="375" height="667"/>
-    </resources>
 </document>

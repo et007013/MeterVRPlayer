@@ -16,7 +16,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var leftSceneView: SCNView!
     @IBOutlet weak var rightSceneView: SCNView!
     @IBOutlet weak var leftSceneWidth: NSLayoutConstraint!
-    @IBOutlet weak var rightSceneWidth: NSLayoutConstraint!
+    @IBOutlet weak var leftSceneHeight: NSLayoutConstraint!
     
     var scenes : [SCNScene]!
     var videoNodes : [SCNNode]!
@@ -29,7 +29,7 @@ class PlayerViewController: UIViewController {
     var recognizer : UITapGestureRecognizer?
     var panRecognizer : UIPanGestureRecognizer?
     
-    var vrPlayer : VideoPlayer?
+    var vrPlayers : [VideoPlayer]!
     var currentAngleX : Float!
     var currentAngleY : Float!
     var oldY : Float!
@@ -44,10 +44,10 @@ class PlayerViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.leftSceneView.delegate  = self
         self.rightSceneView.delegate = self
-        let camX : Float             = 0.0
-        let camY : Float             = 0.0
-        let camZ : Float             = 0.0
-        let zFar                     = 50.0
+        let camX : Float = 0.0
+        let camY : Float = 0.0
+        let camZ : Float = 0.0
+        let zFar         = 50.0
         
         let leftCamera               = SCNCamera()
         let rightCamera              = SCNCamera()
@@ -170,7 +170,15 @@ class PlayerViewController: UIViewController {
         return [ -M_PI_2, camerasNodeAngle1, camerasNodeAngle2]
         
     }
-
+    
+    // MARK: - Camera Orientation
+    override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+       
+        let cameraNodeAngles = getCamerasNodeAngle()
+        
+        
+        
+    }
     
     /*
     // MARK: - Navigation
@@ -230,6 +238,36 @@ extension PlayerViewController:UIGestureRecognizerDelegate {
 extension PlayerViewController:SCNSceneRendererDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+        DispatchQueue.main.async { [weak self] in
+            
+            if let weakSelf = self {
+                
+                if let mm = weakSelf.motionManager, let motion = mm.deviceMotion {
+                    let currentAttitude = motion.attitude
+                    var roll : Double = currentAttitude.roll
+                    
+                    if (UIApplication.shared.statusBarOrientation == .landscapeRight) {
+                        roll = -1.0 * (-M_PI - roll)
+                    }
+                    
+                    for cameraRollNode in weakSelf.cameraRollNodes {
+                        cameraRollNode.eulerAngles.x = Float(roll) - weakSelf.currentAngleY
+                    }
+                    
+                    for cameraPitchNode in weakSelf.cameraPitchNodes {
+                        cameraPitchNode.eulerAngles.z = Float(currentAttitude.pitch)
+                    }
+                    
+                    for cameraYawNode in weakSelf.cameraYawNodes {
+                        cameraYawNode.eulerAngles.y = Float(currentAttitude.yaw) + weakSelf.currentAngleX
+                    }
+                    
+                }
+                
+            }
+            
+        }
         
     }
     

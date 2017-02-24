@@ -10,9 +10,11 @@ import UIKit
 import SceneKit
 import SpriteKit
 import CoreMotion
+import AVFoundation
 
 class PlayerViewController: UIViewController {
     
+    //MARK: - Property
     @IBOutlet weak var leftSceneView: SCNView!
     @IBOutlet weak var rightSceneView: SCNView!
     @IBOutlet weak var leftSceneWidth: NSLayoutConstraint!
@@ -29,7 +31,8 @@ class PlayerViewController: UIViewController {
     var recognizer : UITapGestureRecognizer?
     var panRecognizer : UIPanGestureRecognizer?
     
-    var vrPlayers : [VideoPlayer]!
+//    var vrPlayer : VideoPlayer!
+    var player : AVPlayer!
     var currentAngleX : Float!
     var currentAngleY : Float!
     var oldY : Float!
@@ -37,11 +40,14 @@ class PlayerViewController: UIViewController {
     var progressObserver : AnyObject?
     var isStereo : Bool = false
     var hiddenButtons = false
+    var cardboardViewOn = true
     
+    //MARK: - Life circle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         self.leftSceneView.delegate  = self
         self.rightSceneView.delegate = self
         let camX : Float = 0.0
@@ -108,7 +114,7 @@ class PlayerViewController: UIViewController {
 
         }
         
-        leftCameraNode.position  = SCNVector3(x : camX + ((true  == isStereo) ? 0.0  : 0.5), y :camY, z :camZ)
+        leftCameraNode.position  = SCNVector3(x : camX - ((true == isStereo) ? 0.0  : 0.5), y :camY, z : camZ)
         rightCameraNode.position = SCNVector3(x : camX + ((true == isStereo) ? 0.0  : 0.5), y : camY, z : camZ)
         
         let camerasNodeAngles    = getCamerasNodeAngle()
@@ -143,6 +149,44 @@ class PlayerViewController: UIViewController {
         view.addGestureRecognizer(recognizer!)
         
         panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PlayerViewController.panGesture(sender:)))
+        panRecognizer?.delegate = self
+        view.addGestureRecognizer(panRecognizer!)
+        
+        //Initialize position variable (for the panGesture)
+        currentAngleX = 0
+        currentAngleY = 0
+        
+        oldX = 0
+        oldY = 0
+        
+        self.configPlayer(videoAddr: Bundle.main.path(forResource: "118", ofType: "mp4")!)
+        
+        self.doPlayVideo()
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let _ = leftSceneView, let _ = rightSceneView {
+            displayIfNeededCardboardView()
+        }
+    }
+    
+    fileprivate func displayIfNeededCardboardView() {
+        
+        let width                 = (view.bounds.width > view.bounds.height) ? view.bounds.width : view.bounds.height;
+        
+        leftSceneWidth?.constant  = (true == cardboardViewOn) ? (width / 2.0) : 1
+        leftSceneHeight?.constant = (true == cardboardViewOn) ? (width / 2.0) : 1
+        leftSceneView.isHidden    = (false == cardboardViewOn)
+        
+        if UIInterfaceOrientationIsLandscape(.portrait) {
+            
+        } else {
+            
+        }
+        
+//        cardboardButton?.setImage(UIImage(named: (true == cardboardViewOn) ? "cardboardOn" : "cardboardOff"), for: UIControlState())
         
     }
 
@@ -176,7 +220,12 @@ class PlayerViewController: UIViewController {
        
         let cameraNodeAngles = getCamerasNodeAngle()
         
+        leftSceneWidth?.isActive = (.portrait != toInterfaceOrientation && .portraitUpsideDown != toInterfaceOrientation)
+        leftSceneHeight?.isActive = (.portrait == toInterfaceOrientation || .portraitUpsideDown == toInterfaceOrientation)
         
+        for cameraNode in cameraNodes {
+            cameraNode.eulerAngles = SCNVector3Make(Float(cameraNodeAngles[0]), Float(cameraNodeAngles[1]), Float(cameraNodeAngles[2]))
+        }
         
     }
     
@@ -191,13 +240,157 @@ class PlayerViewController: UIViewController {
     */
     // MARK: - 释放资源
     deinit {
+        motionManager?.stopDeviceMotionUpdates()
+        motionManager = nil
+        
+        if let observer = progressObserver {
+            player.removeTimeObserver(observer)
+        }
+
+    }
+
+}
+
+// MARK: - Player Controller
+extension PlayerViewController : VideoPlayerDelegate {
+    
+    func configPlayer(videoAddr : String) -> Void {
+        
+//        self.vrPlayer = VideoPlayer(url: URL(string: videoAddr)!)
+        self.player = AVPlayer(url: URL(string: videoAddr)!)
+        
+        if self.player != nil {
+            let screenScale : CGFloat            = 3.0
+            let videoSpriteKitNodeLeft           = SKVideoNode(avPlayer : player)
+            let videoNodeLeft                    = SCNNode()
+            let spriteKitScene1                  = SKScene(size : CGSize(width : 1280 * screenScale, height : 1280 * screenScale))
+            spriteKitScene1.shouldRasterize      = true
+            var spriteKitScenes                  = [spriteKitScene1]
+            
+            videoNodeLeft.geometry               = SCNSphere(radius : 30)
+            spriteKitScene1.scaleMode            = .aspectFit
+            videoSpriteKitNodeLeft.position      = CGPoint(x : spriteKitScene1.size.width / 2.0, y : spriteKitScene1.size.height / 2.0)
+            videoSpriteKitNodeLeft.size          = spriteKitScene1.size
+            
+            if true == isStereo {
+                let videoSpriteKitNodeRight      = SKVideoNode(avPlayer : player)
+                let videoNodeRight               = SCNNode()
+                let spriteKitScene2              = SKScene(size : CGSize(width : 1280 * screenScale, height : 1280 * screenScale))
+                spriteKitScene2.shouldRasterize  = true
+                
+                videoSpriteKitNodes              = [videoSpriteKitNodeLeft, videoSpriteKitNodeRight]
+                videoNodes                       = [videoNodeLeft, videoNodeRight]
+                spriteKitScenes                  = [spriteKitScene1, spriteKitScene2]
+                
+                videoNodeRight.geometry          = SCNSphere(radius : 30)
+                spriteKitScene2.scaleMode        = .aspectFit
+                videoSpriteKitNodeRight.position = CGPoint(x : spriteKitScene1.size.width / 2.0, y : spriteKitScene1.size.height / 2.0)
+                videoSpriteKitNodeRight.size     = spriteKitScene2.size
+                
+                let mask                         = SKShapeNode(rect : CGRect(x : 0, y : 0, width : spriteKitScene1.size.width, height : spriteKitScene1.size.width / 2.0))
+                mask.fillColor                   = SKColor.black
+                
+                let cropNode                     = SKCropNode()
+                cropNode.maskNode                = mask
+                
+                cropNode.addChild(videoSpriteKitNodeLeft)
+                cropNode.yScale                  = 2
+                cropNode.position                = CGPoint(x : 0, y : 0)
+                
+                let mask2                        = SKShapeNode(rect : CGRect(x : 0, y : spriteKitScene1.size.width / 2.0, width : spriteKitScene1.size.width,
+                                                                             height : spriteKitScene1.size.width / 2.0))
+                mask2.fillColor                  = SKColor.black
+                let cropNode2                    = SKCropNode()
+                cropNode2.maskNode               = mask2
+                
+                cropNode2.addChild(videoSpriteKitNodeRight)
+                cropNode2.yScale                 = 2
+                cropNode2.position               = CGPoint(x : 0, y : -spriteKitScene1.size.width)
+                
+                spriteKitScene1.addChild(cropNode2)
+                spriteKitScene2.addChild(cropNode)
+                
+            } else {
+                videoSpriteKitNodes              = [videoSpriteKitNodeLeft]
+                videoNodes                       = [videoNodeLeft]
+                
+                spriteKitScene1.addChild(videoSpriteKitNodeLeft)
+            }
+
+            if videoNodes.count == spriteKitScenes.count && scenes.count == videoNodes.count {
+                for i in 0 ..< videoNodes.count {
+                    weak var spriteKitScene = spriteKitScenes[i]
+                    let videoNode = videoNodes[i]
+                    let scene = scenes[i]
+                    
+                    videoNode.geometry?.firstMaterial?.diffuse.contents = spriteKitScene
+                    videoNode.geometry?.firstMaterial?.isDoubleSided = true
+                    
+                    // Flip video upside down, so that it's shown in the right position
+                    var transform                                                = SCNMatrix4MakeRotation(Float(M_PI), 0.0, 0.0, 1.0)
+                    transform                                                    = SCNMatrix4Translate(transform, 1.0, 1.0, 0.0)
+                    
+                    videoNode.pivot                                              = SCNMatrix4MakeRotation(Float(M_PI_2), 0.0, -1.0, 0.0)
+                    videoNode.geometry?.firstMaterial?.diffuse.contentsTransform = transform
+                    
+                    videoNode.position                                           = SCNVector3(x : 0, y : 0, z : 0)
+                    videoNode.position                                           = SCNVector3(x : 0, y : 0, z : 0)
+                    
+                    scene.rootNode.addChildNode(videoNode)
+                }
+            }
+            
+            progressObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)), queue: nil, using: { (time:CMTime) in
+                //do sth
+            }) as AnyObject
+            
+        }
+        
+    }
+    
+    func doPlayVideo() -> Void {
+//        self.vrPlayer.play()
+        for videoSpriteKitNode in videoSpriteKitNodes {
+            
+            videoSpriteKitNode.play()
+            
+        }
+        
+        
+    }
+    
+    func videoPlayerIsReadyToPlayVideo(player : VideoPlayer) -> Void {
+        
+    }
+    
+    func videoPlayerIsReadyDidReachEnd(player : VideoPlayer) -> Void {
+        
+    }
+    
+    func videoPlayerTimeDidChange(player : VideoPlayer, Duration duration:Float) -> Void {
+        
+    }
+    
+    func videoPlayerLoadedTimeRangeDidChange(player : VideoPlayer, Duration duration:Float) -> Void {
+        
+    }
+    
+    func videoPlayerPlaybackBufferEmpty(player : VideoPlayer) -> Void {
+        
+    }
+    
+    func videoPlayerPlaybackLikelyToKeepUp(player : VideoPlayer) -> Void {
+        
+    }
+    
+    func videoPlayerDidFailWithError(player : VideoPlayer, Error error:Error) -> Void {
         
     }
 
 }
 
 // MARK: - Gesture
-extension PlayerViewController:UIGestureRecognizerDelegate {
+extension PlayerViewController : UIGestureRecognizerDelegate {
     @objc fileprivate func tapTheScreen() -> Void {
         
         if hiddenButtons {

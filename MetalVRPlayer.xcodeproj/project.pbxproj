@@ -14,8 +14,8 @@
 		E73C5BB31E31E537007EF87F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73C5BB21E31E537007EF87F /* CoreGraphics.framework */; };
 		E73C5BB51E31E547007EF87F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73C5BB41E31E547007EF87F /* CoreMotion.framework */; };
 		E76350B61E30C9400057F2D6 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76350B51E30C9400057F2D6 /* SceneKit.framework */; };
+		E77813B71E5FD73900B353BC /* 118.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E77813B61E5FD73900B353BC /* 118.mp4 */; };
 		E783F1AF1E3086C400B8D75B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E783F1AE1E3086C400B8D75B /* AppDelegate.swift */; };
-		E783F1B11E3086C400B8D75B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E783F1B01E3086C400B8D75B /* ViewController.swift */; };
 		E783F1B41E3086C400B8D75B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E783F1B21E3086C400B8D75B /* Main.storyboard */; };
 		E783F1B61E3086C400B8D75B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E783F1B51E3086C400B8D75B /* Assets.xcassets */; };
 		E783F1B91E3086C400B8D75B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E783F1B71E3086C400B8D75B /* LaunchScreen.storyboard */; };
@@ -32,14 +32,13 @@
 		E73C5BB21E31E537007EF87F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E73C5BB41E31E547007EF87F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		E76350B51E30C9400057F2D6 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		E77813B61E5FD73900B353BC /* 118.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 118.mp4; sourceTree = "<group>"; };
 		E783F1AB1E3086C400B8D75B /* MetalVRPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalVRPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E783F1AE1E3086C400B8D75B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E783F1B01E3086C400B8D75B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E783F1B31E3086C400B8D75B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E783F1B51E3086C400B8D75B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E783F1B81E3086C400B8D75B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E783F1BA1E3086C400B8D75B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E783F1C51E30884600B8D75B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E783F1CA1E30BA2000B8D75B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E783F1CC1E30BA4B00B8D75B /* VideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		E783F1CE1E30BC0D00B8D75B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
@@ -64,6 +63,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E77813B51E5FD73900B353BC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E77813B61E5FD73900B353BC /* 118.mp4 */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		E783F1A21E3086C400B8D75B = {
 			isa = PBXGroup;
 			children = (
@@ -85,13 +92,13 @@
 			isa = PBXGroup;
 			children = (
 				E783F1AE1E3086C400B8D75B /* AppDelegate.swift */,
-				E783F1B01E3086C400B8D75B /* ViewController.swift */,
-				E783F1B21E3086C400B8D75B /* Main.storyboard */,
 				E783F1B51E3086C400B8D75B /* Assets.xcassets */,
-				E783F1B71E3086C400B8D75B /* LaunchScreen.storyboard */,
 				E783F1BA1E3086C400B8D75B /* Info.plist */,
-				E783F1CC1E30BA4B00B8D75B /* VideoPlayer.swift */,
+				E783F1B71E3086C400B8D75B /* LaunchScreen.storyboard */,
+				E783F1B21E3086C400B8D75B /* Main.storyboard */,
 				E73C5BA81E31BCF1007EF87F /* PlayerViewController.swift */,
+				E77813B51E5FD73900B353BC /* Resources */,
+				E783F1CC1E30BA4B00B8D75B /* VideoPlayer.swift */,
 			);
 			path = MetalVRPlayer;
 			sourceTree = "<group>";
@@ -107,7 +114,6 @@
 				E76350B51E30C9400057F2D6 /* SceneKit.framework */,
 				E783F1CE1E30BC0D00B8D75B /* VideoToolbox.framework */,
 				E783F1CA1E30BA2000B8D75B /* AVFoundation.framework */,
-				E783F1C51E30884600B8D75B /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -172,6 +178,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E77813B71E5FD73900B353BC /* 118.mp4 in Resources */,
 				E783F1B91E3086C400B8D75B /* LaunchScreen.storyboard in Resources */,
 				E783F1B61E3086C400B8D75B /* Assets.xcassets in Resources */,
 				E783F1B41E3086C400B8D75B /* Main.storyboard in Resources */,
@@ -185,7 +192,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E783F1B11E3086C400B8D75B /* ViewController.swift in Sources */,
 				E73C5BA91E31BCF1007EF87F /* PlayerViewController.swift in Sources */,
 				E783F1AF1E3086C400B8D75B /* AppDelegate.swift in Sources */,
 				E783F1CD1E30BA4B00B8D75B /* VideoPlayer.swift in Sources */,
@@ -311,6 +317,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 96E5N4445H;
 				INFOPLIST_FILE = MetalVRPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ngo.gcw.net.MetalVRPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -325,6 +332,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 96E5N4445H;
 				INFOPLIST_FILE = MetalVRPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ngo.gcw.net.MetalVRPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

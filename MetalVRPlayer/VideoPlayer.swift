@@ -284,8 +284,12 @@ extension VideoPlayer {
     
     @objc fileprivate func playerItemDidPlayToEndTime(nofication : Notification) {
         //TODO: to write code
-        if (nofication.object as! UIAccessibilityCustomRotorItemResult) != self.player!.currentItem {
-            return
+        if #available(iOS 10.0, *) {
+            if (nofication.object as! UIAccessibilityCustomRotorItemResult) != self.player!.currentItem {
+                return
+            }
+        } else {
+            // Fallback on earlier versions
         }
         
         self.isAtEndTime = true

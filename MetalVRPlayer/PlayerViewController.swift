@@ -19,6 +19,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var rightSceneView: SCNView!
     @IBOutlet weak var leftSceneWidth: NSLayoutConstraint!
     @IBOutlet weak var leftSceneHeight: NSLayoutConstraint!
+    @IBOutlet weak var playerButton: UIButton!
     
     var scenes : [SCNScene]!
     var videoNodes : [SCNNode]!
@@ -31,8 +32,8 @@ class PlayerViewController: UIViewController {
     var recognizer : UITapGestureRecognizer?
     var panRecognizer : UIPanGestureRecognizer?
     
-//    var vrPlayer : VideoPlayer!
-    var player : AVPlayer!
+    var vrPlayer : VideoPlayer!
+//    var player : AVPlayer!
     var currentAngleX : Float!
     var currentAngleY : Float!
     var oldY : Float!
@@ -47,6 +48,37 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.sceneViewConfig(isStereoOrNot: isStereo)
+        
+        motionManager                             = CMMotionManager()
+        motionManager?.deviceMotionUpdateInterval = 1.0 / 60.0
+        motionManager?.startDeviceMotionUpdates(using : CMAttitudeReferenceFrame.xArbitraryZVertical)
+        
+        recognizer                                = UITapGestureRecognizer(target : self, action : #selector(PlayerViewController.tapTheScreen))
+        recognizer?.delegate                      = self
+        view.addGestureRecognizer(recognizer!)
+        
+        panRecognizer                             = UIPanGestureRecognizer(target : self, action : #selector(PlayerViewController.panGesture(sender :)))
+        panRecognizer?.delegate                   = self
+        view.addGestureRecognizer(panRecognizer!)
+        
+        //Initialize position variable (for the panGesture)
+        currentAngleX                             = 0
+        currentAngleY                             = 0
+        
+        oldX                                      = 0
+        oldY                                      = 0
+        
+        self.configPlayer(videoAddr: Bundle.main.url(forResource: "118", withExtension: "mp4")!.absoluteString)
+        
+        self.doPlayVideo()
+        
+        self.playerButton.isSelected = true
+        
+    }
+    
+    fileprivate func sceneViewConfig(isStereoOrNot : Bool) {
         
         self.leftSceneView.delegate  = self
         self.rightSceneView.delegate = self
@@ -93,11 +125,11 @@ class PlayerViewController: UIViewController {
             cameraPitchNodes         = [cameraPitchNodeLeft, cameraPitchNodeRight]
             cameraYawNodes           = [cameraYawNodeLeft, cameraYawNodeRight]
             
-            rightSceneView?.scene    = scene2
-            leftCamera.xFov          = 80
-            rightCamera.xFov         = 80
-            leftCamera.yFov          = 80
-            rightCamera.yFov         = 80
+            rightSceneView?.scene = scene2
+            leftCamera.xFov       = 80
+            rightCamera.xFov      = 80
+            leftCamera.yFov       = 80
+            rightCamera.yFov      = 80
             
             cameraNodeRight.addChildNode(rightCameraNode)
             cameraRollNodeRight.addChildNode(cameraNodeRight)
@@ -105,63 +137,46 @@ class PlayerViewController: UIViewController {
             cameraYawNodeRight.addChildNode(cameraPitchNodeRight)
             
         } else {
-            scenes = [scene1]
-            cameraNodes = [cameraNodeLeft]
-            cameraRollNodes = [cameraRollNodeLeft]
-            cameraPitchNodes = [cameraPitchNodeLeft]
-            cameraYawNodes = [cameraYawNodeLeft]
-            rightSceneView?.scene = scene1
-
+            let scene2               = SCNScene()
+            let cameraNodeRight      = SCNNode()
+            let cameraRollNodeRight  = SCNNode()
+            let cameraPitchNodeRight = SCNNode()
+            let cameraYawNodeRight   = SCNNode()
+            
+            scenes                = [scene1, scene2]
+            cameraNodes           = [cameraNodeLeft, cameraNodeRight]
+            cameraRollNodes       = [cameraRollNodeLeft, cameraRollNodeRight]
+            cameraPitchNodes      = [cameraPitchNodeLeft, cameraPitchNodeRight]
+            cameraYawNodes        = [cameraYawNodeLeft, cameraYawNodeRight]
+            rightSceneView?.scene = scene2
+            
         }
         
-        leftCameraNode.position  = SCNVector3(x : camX - ((true == isStereo) ? 0.0  : 0.5), y :camY, z : camZ)
+        leftCameraNode.position  = SCNVector3(x : camX - ((true == isStereo) ? 0.0  : 0.5), y : camY, z : camZ)
         rightCameraNode.position = SCNVector3(x : camX + ((true == isStereo) ? 0.0  : 0.5), y : camY, z : camZ)
         
-        let camerasNodeAngles    = getCamerasNodeAngle()
+        let camerasNodeAngles                     = getCamerasNodeAngle()
         
         for cameraNode in cameraNodes {
-            cameraNode.position    = SCNVector3(x : camX, y : camY, z : camZ)
-            cameraNode.eulerAngles = SCNVector3Make( Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]) )
+            cameraNode.position                   = SCNVector3(x                  : camX, y                  : camY, z                  : camZ)
+            cameraNode.eulerAngles                = SCNVector3Make( Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]) )
         }
-
+        
         if scenes.count == cameraYawNodes.count {
             
             for index in 0 ..< scenes.count {
-                let scene         = scenes[index]
-                let cameraYawNode = cameraYawNodes[index]
+                let scene                         = scenes[index]
+                let cameraYawNode                 = cameraYawNodes[index]
                 scene.rootNode.addChildNode(cameraYawNode)
             }
             
         }
         
-        leftSceneView.pointOfView = leftCameraNode
-        rightSceneView.pointOfView = rightCameraNode
+        leftSceneView.pointOfView                 = leftCameraNode
+        rightSceneView.pointOfView                = rightCameraNode
         
-        leftSceneView.isPlaying = true
-        rightSceneView.isPlaying = true
-        
-        motionManager = CMMotionManager()
-        motionManager?.deviceMotionUpdateInterval = 1.0 / 60.0
-        motionManager?.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xArbitraryZVertical)
-        
-        recognizer = UITapGestureRecognizer(target: self, action: #selector(PlayerViewController.tapTheScreen))
-        recognizer?.delegate = self
-        view.addGestureRecognizer(recognizer!)
-        
-        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PlayerViewController.panGesture(sender:)))
-        panRecognizer?.delegate = self
-        view.addGestureRecognizer(panRecognizer!)
-        
-        //Initialize position variable (for the panGesture)
-        currentAngleX = 0
-        currentAngleY = 0
-        
-        oldX = 0
-        oldY = 0
-        
-        self.configPlayer(videoAddr: Bundle.main.path(forResource: "118", ofType: "mp4")!)
-        
-        self.doPlayVideo()
+        leftSceneView.isPlaying                   = true
+        rightSceneView.isPlaying                  = true
         
     }
     
@@ -238,14 +253,19 @@ class PlayerViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func touchToPlayPause(_ sender: Any) {
+        
+        self.doPlayVideo()
+        self.playerButton.isSelected = !self.playerButton.isSelected
+        
+    }
+    
+    
     // MARK: - 释放资源
     deinit {
         motionManager?.stopDeviceMotionUpdates()
         motionManager = nil
-        
-        if let observer = progressObserver {
-            player.removeTimeObserver(observer)
-        }
 
     }
 
@@ -256,10 +276,10 @@ extension PlayerViewController : VideoPlayerDelegate {
     
     func configPlayer(videoAddr : String) -> Void {
         
-//        self.vrPlayer = VideoPlayer(url: URL(string: videoAddr)!)
-        self.player = AVPlayer(url: URL(string: videoAddr)!)
+        self.vrPlayer = VideoPlayer(url: URL(string: videoAddr)!)
+//        self.player = AVPlayer(url: URL(fileURLWithPath: videoAddr))
         
-        if self.player != nil {
+        if let player = vrPlayer.player {
             let screenScale : CGFloat            = 3.0
             let videoSpriteKitNodeLeft           = SKVideoNode(avPlayer : player)
             let videoNodeLeft                    = SCNNode()
@@ -311,10 +331,22 @@ extension PlayerViewController : VideoPlayerDelegate {
                 spriteKitScene2.addChild(cropNode)
                 
             } else {
-                videoSpriteKitNodes              = [videoSpriteKitNodeLeft]
-                videoNodes                       = [videoNodeLeft]
+                let videoSpriteKitNodeRight      = SKVideoNode(avPlayer : player)
+                let videoNodeRight               = SCNNode()
+                let spriteKitScene2              = SKScene(size : CGSize(width : 1280 * screenScale, height : 1280 * screenScale))
+                spriteKitScene2.shouldRasterize  = true
+                
+                videoSpriteKitNodes              = [videoSpriteKitNodeLeft, videoSpriteKitNodeRight]
+                videoNodes                       = [videoNodeLeft, videoNodeRight]
+                spriteKitScenes                  = [spriteKitScene1, spriteKitScene2]
+                
+                videoNodeRight.geometry          = SCNSphere(radius : 30)
+                spriteKitScene2.scaleMode        = .aspectFit
+                videoSpriteKitNodeRight.position = CGPoint(x : spriteKitScene1.size.width / 2.0, y : spriteKitScene1.size.height / 2.0)
+                videoSpriteKitNodeRight.size     = spriteKitScene2.size
                 
                 spriteKitScene1.addChild(videoSpriteKitNodeLeft)
+                spriteKitScene2.addChild(videoSpriteKitNodeRight)
             }
 
             if videoNodes.count == spriteKitScenes.count && scenes.count == videoNodes.count {
@@ -340,9 +372,9 @@ extension PlayerViewController : VideoPlayerDelegate {
                 }
             }
             
-            progressObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)), queue: nil, using: { (time:CMTime) in
-                //do sth
-            }) as AnyObject
+//            progressObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)), queue: nil, using: { (time:CMTime) in
+//                //do sth
+//            }) as AnyObject
             
         }
         
@@ -350,12 +382,19 @@ extension PlayerViewController : VideoPlayerDelegate {
     
     func doPlayVideo() -> Void {
 //        self.vrPlayer.play()
-        for videoSpriteKitNode in videoSpriteKitNodes {
+        for videoNode in videoSpriteKitNodes {
             
-            videoSpriteKitNode.play()
+            if self.playerButton.isSelected {
+                self.vrPlayer.pause()
+//                videoNode.pause()
+                
+            } else {
+                self.vrPlayer.play()
+//                videoNode.play()
+                
+            }
             
         }
-        
         
     }
     

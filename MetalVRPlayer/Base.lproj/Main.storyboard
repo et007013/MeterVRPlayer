@@ -4,8 +4,8 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -44,20 +44,40 @@
                                 <rect key="frame" x="300" y="0.0" width="367" height="375"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </sceneKitView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="U4d-PM-iWo">
+                                <rect key="frame" x="69" y="330" width="586" height="31"/>
+                            </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2y-4z-Bn3">
+                                <rect key="frame" x="32" y="334" width="13" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="TX5-2c-PHC"/>
+                                    <constraint firstAttribute="width" constant="13" id="m8L-wv-Iua"/>
+                                </constraints>
+                                <state key="normal" image="button_play_play"/>
+                                <state key="selected" image="pause_button"/>
+                                <connections>
+                                    <action selector="touchToPlayPause:" destination="0YW-2K-Djt" eventType="touchUpInside" id="uhw-bZ-DVp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="ms9-oa-fnf" secondAttribute="trailing" id="CHi-ny-qFP"/>
                             <constraint firstItem="nQ7-FG-WUs" firstAttribute="top" secondItem="xOu-wF-lsK" secondAttribute="top" id="EFS-SS-Ypr"/>
+                            <constraint firstItem="U4d-PM-iWo" firstAttribute="centerY" secondItem="V2y-4z-Bn3" secondAttribute="centerY" id="GzH-Rl-QwE"/>
                             <constraint firstItem="nQ7-FG-WUs" firstAttribute="leading" secondItem="xOu-wF-lsK" secondAttribute="leading" id="J1u-NX-Z2C"/>
+                            <constraint firstAttribute="trailing" secondItem="U4d-PM-iWo" secondAttribute="trailing" constant="14" id="NFq-9d-wCl"/>
                             <constraint firstAttribute="trailing" secondItem="ms9-oa-fnf" secondAttribute="trailing" id="NWE-Zu-q5b"/>
                             <constraint firstItem="ms9-oa-fnf" firstAttribute="leading" secondItem="xOu-wF-lsK" secondAttribute="leading" id="QhU-oc-Fju"/>
+                            <constraint firstItem="V2y-4z-Bn3" firstAttribute="leading" secondItem="xOu-wF-lsK" secondAttribute="leadingMargin" constant="12" id="UEp-7h-8BG"/>
                             <constraint firstItem="nQ7-FG-WUs" firstAttribute="top" secondItem="ms9-oa-fnf" secondAttribute="top" id="UbA-8B-nMm"/>
                             <constraint firstItem="ms9-oa-fnf" firstAttribute="top" secondItem="nQ7-FG-WUs" secondAttribute="bottom" id="Une-p0-iRZ"/>
                             <constraint firstItem="ms9-oa-fnf" firstAttribute="top" secondItem="xOu-wF-lsK" secondAttribute="top" id="VvP-jU-qPY"/>
                             <constraint firstItem="nQ7-FG-WUs" firstAttribute="top" secondItem="xOu-wF-lsK" secondAttribute="top" id="f0n-Bb-25m"/>
                             <constraint firstItem="ms9-oa-fnf" firstAttribute="leading" secondItem="nQ7-FG-WUs" secondAttribute="trailing" id="kAC-4s-uNq"/>
                             <constraint firstItem="wZP-GJ-BOD" firstAttribute="top" secondItem="nQ7-FG-WUs" secondAttribute="bottom" id="khS-ca-CwS"/>
+                            <constraint firstItem="U4d-PM-iWo" firstAttribute="leading" secondItem="xOu-wF-lsK" secondAttribute="leading" constant="71" id="mpp-OQ-Wby"/>
+                            <constraint firstItem="wZP-GJ-BOD" firstAttribute="top" secondItem="U4d-PM-iWo" secondAttribute="bottom" constant="15" id="nJH-2U-NHv"/>
                             <constraint firstAttribute="trailing" secondItem="nQ7-FG-WUs" secondAttribute="trailing" id="ocN-WP-x7G"/>
                             <constraint firstItem="wZP-GJ-BOD" firstAttribute="top" secondItem="ms9-oa-fnf" secondAttribute="bottom" id="qiq-CG-Qxu"/>
                             <constraint firstItem="wZP-GJ-BOD" firstAttribute="top" secondItem="ms9-oa-fnf" secondAttribute="bottom" id="rBr-0u-Mvy"/>
@@ -99,6 +119,7 @@
                         <outlet property="leftSceneHeight" destination="zFw-ga-xFQ" id="LpR-oM-z5e"/>
                         <outlet property="leftSceneView" destination="nQ7-FG-WUs" id="JYa-OQ-AcI"/>
                         <outlet property="leftSceneWidth" destination="iTZ-nV-vvp" id="eBM-gE-gQj"/>
+                        <outlet property="playerButton" destination="V2y-4z-Bn3" id="Px0-E6-nvQ"/>
                         <outlet property="rightSceneView" destination="ms9-oa-fnf" id="gXM-WW-z65"/>
                     </connections>
                 </viewController>
@@ -107,4 +128,8 @@
             <point key="canvasLocation" x="136.28185907046478" y="796"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="button_play_play" width="13" height="17"/>
+        <image name="pause_button" width="10" height="16"/>
+    </resources>
 </document>

@@ -64,16 +64,14 @@ class VideoPlayer: NSObject {
     
     fileprivate var isAtEndTime : Bool? {
         
-        set {
-        
+        willSet {
+            
         }
         
-        get {
-            var result = self.isAtEndTime
+        didSet(oldVar) {
+            
             if self.player == nil && self.player!.currentItem == nil {
-                if result! {
-                    return result
-                }
+                return self.isAtEndTime = oldVar
             }
             
             var currentTime = 0.0
@@ -89,18 +87,16 @@ class VideoPlayer: NSObject {
             if currentTime > 0.0 && videoDuration > 0.0 {
                 
                 if fabs(currentTime - videoDuration) < 0.001 {
-                    result = true
+                    self.isAtEndTime = true
                 } else {
-                    result = false
+                    self.isAtEndTime = false
                 }
                 
             } else {
-                result = false
+                self.isAtEndTime = false
             }
             
-            return result
         }
-        
     }
     
     
@@ -113,6 +109,7 @@ class VideoPlayer: NSObject {
         asset      = AVAsset(url: videoAddr!)
         playerItem = AVPlayerItem(asset: asset!)
         player     = AVPlayer(playerItem: playerItem)
+        self.isAtEndTime = false
         
         super.init()
         
@@ -168,6 +165,11 @@ extension VideoPlayer {
             
         }
         
+    }
+    
+    func pause() -> Void {
+        self.playerIsPlaying = false
+        self.player?.pause()
     }
     
     func reStart() -> Void {
@@ -360,7 +362,7 @@ extension VideoPlayer {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (context == &VideoPlayer_PlayerRateChangedContext) {
             
-            if !self.isScrubbing && self.playerIsPlaying && self.player!.rate == 0.0 {
+            if !self.isScrubbing && self.playerIsPlaying && abs(self.player!.rate - 0.0) < 0.001 {
                 //TODO: Show loading indicator
             }
             
@@ -479,33 +481,3 @@ extension VideoPlayer {
     }
     
 }
-
-//extension VideoPlayer : VideoPlayerDelegate {
-//    func videoPlayerIsReadyToPlayVideo(player : VideoPlayer) -> Void {
-//        
-//    }
-//    
-//    func videoPlayerIsReadyDidReachEnd(player : VideoPlayer) -> Void {
-//        
-//    }
-//    
-//    func videoPlayerTimeDidChange(player : VideoPlayer, Duration duration:Float) -> Void {
-//        
-//    }
-//    
-//    func videoPlayerLoadedTimeRangeDidChange(player : VideoPlayer, Duration duration:Float) -> Void {
-//        
-//    }
-//    
-//    func videoPlayerPlaybackBufferEmpty(player : VideoPlayer) -> Void {
-//        
-//    }
-//    
-//    func videoPlayerPlaybackLikelyToKeepUp(player : VideoPlayer) -> Void {
-//        
-//    }
-//    
-//    func videoPlayerDidFailWithError(player : VideoPlayer, Error error:Error) -> Void {
-//        
-//    }
-//}
